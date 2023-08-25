@@ -45,7 +45,7 @@ const errorHandler = (err, req, res, next) => {
       break;
 
     default:
-      res.json({
+      res.status(500).json({
         title: "Red ALERT",
         message: err.message,
         stackTree: err.stack,
