@@ -25,13 +25,13 @@ const loginUser = async (req, res) => {
       id: user.id
     }
     const options = {
-      expiresIn: "5m"
+      expiresIn: "30m"
     }
 
     const accessToken = jwt.sign(payload, process.env.SECRET_ACCESS_TOKEN, options)
     console.log(accessToken)
 
-    res.status(200).cookie("Token", accessToken).json("User Logged In")
+    res.status(200).cookie("Token", accessToken).json(payload)
   }
   else {
     res.status(400)
@@ -68,14 +68,18 @@ const registerUser = async (req, res) => {
   else throw new Error("User data is not valid");
 };
 
-const currentUser = (req, res) => {
-  
+const currentUser = async (req, res) => {
   result = {
     "name": req.user.name,
     "email": req.user.email,
   }
   console.log(result)
-  res.status(200).json( result)
+  res.status(200).json(result)
 }
 
-module.exports = { registerUser, loginUser, currentUser, testApi };
+const logoutUser = async (req, res) => {
+  res.cookie("Token", undefined).json(true)
+
+}
+
+module.exports = { registerUser, loginUser, currentUser, logoutUser, testApi };
