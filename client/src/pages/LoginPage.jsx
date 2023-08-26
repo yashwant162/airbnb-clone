@@ -1,25 +1,31 @@
 import { Link, Navigate } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import axios from "axios";
+import { UserContext } from "../UserContext";
 export default function LoginPage() {
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [redirect, setRedirect] = useState("");
+  const {setUser} = useContext(UserContext)
+
   async function loginUser(ev) {
     ev.preventDefault();
     try {
-      const response = await axios.post("/api/user/login", {
-        email,
-        password,
-      });
-      alert(response.status);
-      if (response.status == 200) setRedirect(true);
+      const response = await axios.post("/api/user/login", {email,password,});
+      setUser(response.data)
+      alert(`Welcome ${response.data.name},`);
+      
+      if (response.status == 200) 
+        setRedirect(true);
+
     } catch (err) {
-      alert("Something went wrong \n" + err.response.data.message);
+        alert("Something went wrong \n" + err.response.data.message);
     }
   }
 
-  if (redirect) return <Navigate to={"/"} />;
+  if (redirect) 
+    return <Navigate to={"/"} />;
 
   return (
     <div className="mt-4 grow flex items-center justify-around  ">
