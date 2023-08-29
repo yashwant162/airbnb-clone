@@ -5,7 +5,7 @@ const validateToken = async (req, res, next) => {
   console.log("was i here?")
   console.log("cookie", bearerHeader)
   
-  if (typeof bearerHeader.Token !== "undefined" || bearerHeader.Token !== 'undefined' ){
+  if (typeof bearerHeader.Token !== "undefined" && bearerHeader.Token !== 'undefined' ){
     let token = bearerHeader?.Token;
     console.log("Token: ", token)
     jwt.verify(token, process.env.SECRET_ACCESS_TOKEN, async (err, decoded) => {

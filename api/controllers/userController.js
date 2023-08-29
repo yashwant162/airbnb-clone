@@ -25,7 +25,7 @@ const loginUser = async (req, res) => {
       id: user.id
     }
     const options = {
-      expiresIn: "30m"
+      expiresIn: "300m"
     }
 
     const accessToken = jwt.sign(payload, process.env.SECRET_ACCESS_TOKEN, options)
