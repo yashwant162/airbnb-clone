@@ -1,6 +1,9 @@
 const User = require("../models/userModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken")
+const imageDownloader = require("image-downloader")
+const path = require('path');
+const fs = require("fs")
 
 const testApi = (req, res) => {
   res.json("Ok its working");
@@ -82,4 +85,41 @@ const logoutUser = async (req, res) => {
 
 }
 
-module.exports = { registerUser, loginUser, currentUser, logoutUser, testApi };
+const uploadByLink = async (req, res) => {
+
+  const {link} = req.body
+  const newName = 'photos' + Date.now() + '.jpg'
+  const destination = path.join(__dirname, '..', 'uploads', newName);
+
+  try {
+    await imageDownloader.image({
+      url: link,
+      dest: destination,
+    });
+    console.log("filename: "+ newName)
+    res.json(newName)
+
+  } catch (error) {
+    res.status(400);
+    throw new Error("This image cannot be downloaded");
+  }
+
+}
+
+const uploadPhotos = async (req, res) => {
+  const uploadedFiles = []
+  for(let i = 0; i < req.files.length; i++){
+    const {path, originalname} = req.files[i]
+    const parts = originalname.split('.')
+    const ext = parts[parts.length-1]
+    const newPath = path + '.' + ext
+    
+    console.log(newPath)
+    fs.renameSync(path, newPath)
+    uploadedFiles.push(newPath.replace("uploads\\",""))
+  }
+
+  res.json(uploadedFiles)
+}
+
+module.exports = { registerUser, loginUser, currentUser, logoutUser, uploadByLink,uploadPhotos, testApi };
