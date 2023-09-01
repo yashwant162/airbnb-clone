@@ -1,4 +1,5 @@
 const User = require("../models/userModel");
+const Place = require("../models/placeModel")
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken")
 const imageDownloader = require("image-downloader")
@@ -122,4 +123,29 @@ const uploadPhotos = async (req, res) => {
   res.json(uploadedFiles)
 }
 
-module.exports = { registerUser, loginUser, currentUser, logoutUser, uploadByLink,uploadPhotos, testApi };
+const addPlace = async (req,res) => {
+  const email = req.user.email
+  const userData = await User.findOne({ email });
+  const {
+        title, address, addPhotos,
+        description,extraInfo,perks,
+        checkIn,checkOut,maxGuests
+        } = req.body
+  const response = await Place.create({
+    owner: userData.id,
+    title: title,
+    address:address,
+    photos: addPhotos,
+    description: description,
+    extrainfo: extraInfo,
+    perks: perks,
+    checkIn: checkIn,
+    checkOut: checkOut,
+    maxGuests: maxGuests
+  })
+
+  res.status(200).json(response)
+  
+}
+
+module.exports = { registerUser, loginUser, currentUser, logoutUser, uploadByLink,uploadPhotos, addPlace, testApi };
