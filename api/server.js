@@ -16,6 +16,7 @@ app.use(cookieParser())
 app.use('/uploads',express.static(__dirname+'/uploads'))
 app.use(cors(allowedHosts));
 app.use("/api/user", require("./routes/userRoutes"));
+app.use("/api/data", require("./routes/dataRoutes"));
 app.use(errorHandler);
 
 app.listen(PORT, () => {
