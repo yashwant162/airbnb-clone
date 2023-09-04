@@ -8,7 +8,7 @@ export default function PhotoUploader({addPhotos, onChange}){
     console.log("in upload ft")
     ev.preventDefault()
     try {
-      const {data:filename} = await axios.post("/api/user/upload-by-link", {link:linkPhotos});
+      const {data:filename} = await axios.post("/api/data/upload-by-link", {link:linkPhotos});
       // alert(`Welcome ${filename},`);
       console.log("Link " + filename)
       onChange(prev => {
@@ -32,7 +32,7 @@ export default function PhotoUploader({addPhotos, onChange}){
     }
     console.log("what is the data :" + data)
   
-    const {data:filenames} = await axios.post("/api/user/upload",data,{headers:{'Content-type':'multipart/form-data'}})
+    const {data:filenames} = await axios.post("/api/data/upload",data,{headers:{'Content-type':'multipart/form-data'}})
     
     onChange(prev => {
       return [...prev, ...filenames]
