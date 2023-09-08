@@ -1,13 +1,13 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Perks from "./Perks";
 import PhotoUploader from "../PhotoUploader";
 import axios from "axios";
 import AccountNav from "../AccountNav";
-import { Navigate } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 // import {  Navigate, useParams } from "react-router-dom";
 
 export default function PlacesFormPage() {
-
+  const {id} = useParams()
   const [title,setTitle] = useState('')
   const [address,setAddress] = useState('')
   const [addPhotos,setAddPhotos] = useState([])
@@ -18,6 +18,30 @@ export default function PlacesFormPage() {
   const [checkIn,setCheckIn] = useState('')
   const [checkOut,setCheckOut] = useState('')
   const [maxGuests,setMaxGuests] = useState(1)
+
+  useEffect(() => {
+    
+    if(!id){
+      return 
+    }
+    
+    async function fetchPlace(){
+      
+      const {"data":{placeData}} = await axios.get('api/data/place/'+id)
+      console.log(placeData)
+      setTitle(placeData.title)
+      setDescription(placeData.description)
+      setAddress(placeData.address)
+      setCheckIn(placeData.checkIn)
+      setCheckOut(placeData.checkOut)
+      setAddPhotos(placeData.photos)
+      setExtraInfo(placeData.extrainfo)
+      setPerks(placeData.perks)
+      setMaxGuests(placeData.maxGuests)
+    }
+
+    fetchPlace()
+  },[id])
 
   
   function inputHeader(title){
@@ -41,20 +65,26 @@ export default function PlacesFormPage() {
       )
   }
 
-  async function addNewPlace(ev){
+  async function savePlace(ev){
     ev.preventDefault()
-    
-    const placeInfo = {
+
+    let placeInfo = {
       title, address, addPhotos,
       description,extraInfo,perks,
       checkIn,checkOut,maxGuests
     }
+    console.log("id in save place is "+id)
 
-    const {data} = await axios.post("api/data/add-place",placeInfo)
-    console.log(data)
-
+    if(id){
+      const {data} = await axios.put("api/data/add-place",{id, ...placeInfo})
+      console.log(data)
+    } else {
+      
+      const {data} = await axios.post("api/data/add-place",placeInfo)
+      console.log(data)
+      
+    }
     setRedirect(true)
-    
   }
 
   if(redirect){
@@ -64,7 +94,7 @@ export default function PlacesFormPage() {
   return (
      <div>
           <AccountNav/>
-          <form onSubmit={addNewPlace}>
+          <form onSubmit={savePlace}>
             {preInput('Title','Title for your place, should be short and catchy as in advertisement')}
             <input type="text" value={title} onChange={ev => setTitle(ev.target.value)} placeholder="title, for example: My Hotel "/>
 
