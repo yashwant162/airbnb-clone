@@ -10,7 +10,7 @@ export default function PlacesPage()  {
   useEffect(() => {
 
     async function fetchPlaces(){
-      const {"data":{placesData}}=  await axios.get('api/data/get-places')
+      const {"data":{placesData}}=  await axios.get('api/data/get-user-places')
       console.log(placesData)
       setPlaces(placesData)
     }
@@ -29,11 +29,20 @@ export default function PlacesPage()  {
           </Link>
         </div>
 
-        <div className="text-left mt-10">
+        <div className="mt-10">
           {places.length > 0 && places.map(place => (
-            <div key={place._id}>
-              {place.title}
-            </div>
+            <Link to={'/account/places/'+place._id} key={place._id} className="cursor-pointer bg-gray-200 p-4 rounded-2xl flex gap-4 mt-4">
+              <div className="bg-gray-300 h-32 w-32 grow shrink-0 flex">
+                {place.photos.length > 0 && (
+                  <img className="object-cover" src={"http://localhost:5000/uploads/"+place.photos[0]} alt="" />
+                )}
+              </div>
+              <div className="grow-0 shrink">
+                <h2 className="text-xl">{place.title}</h2>
+                <p className="text-sm mt-2">{place.description}</p>
+
+              </div>
+            </Link>
           ))}
         </div>
     </div>
