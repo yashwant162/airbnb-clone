@@ -44,6 +44,7 @@ const uploadPhotos = async (req, res) => {
 const addPlace = async (req,res) => {
   const email = req.user.email
   const userData = await User.findOne({ email });
+  console.log(req.body)
   const {
         title, address, addPhotos,
         description,extraInfo,perks,
@@ -66,8 +67,12 @@ const addPlace = async (req,res) => {
   
 }
 
+const getAllPlaces = async (req,res) => {
+  const places = await Place.find()
+  res.json({"placesData":places})
+}
 
-const getPlaces = async (req,res) => {
+const getUserPlaces = async (req,res) => {  
   let {id} = req.user
   console.log(id)
 
@@ -77,4 +82,38 @@ const getPlaces = async (req,res) => {
   res.json({"placesData":places})
 }
 
-module.exports = {uploadByLink, uploadPhotos, addPlace, getPlaces}
+const getPlaceById = async (req,res) => {
+    const {id} = req.params
+    const place = await Place.findById(id)
+    res.json({"placeData":place})
+    
+}
+
+const updatePlace = async (req,res) => {
+  const {
+        id,title, address, addPhotos,
+        description,extraInfo,perks,
+        checkIn,checkOut,maxGuests
+        } = req.body  
+
+  const PlaceDoc = await Place.findById(id)
+  
+  if(PlaceDoc.owner.toString() === req.user.id){
+      PlaceDoc.set({
+        title: title,
+        address:address,
+        photos: addPhotos,
+        description: description,
+        extrainfo: extraInfo,
+        perks: perks,
+        checkIn: checkIn,
+        checkOut: checkOut,
+        maxGuests: maxGuests
+          })
+      await PlaceDoc.save()
+      return res.json('Data uddated Successfully')
+  }
+  res.status(400).json("user id did not match")
+}
+
+module.exports = {uploadByLink, uploadPhotos, addPlace, getUserPlaces, getPlaceById, updatePlace, getAllPlaces}
