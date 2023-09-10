@@ -48,7 +48,7 @@ const addPlace = async (req,res) => {
   const {
         title, address, addPhotos,
         description,extraInfo,perks,
-        checkIn,checkOut,maxGuests
+        checkIn,checkOut,maxGuests,price
         } = req.body
   const response = await Place.create({
     owner: userData.id,
@@ -60,7 +60,8 @@ const addPlace = async (req,res) => {
     perks: perks,
     checkIn: checkIn,
     checkOut: checkOut,
-    maxGuests: maxGuests
+    maxGuests: maxGuests,
+    price: price
   })
 
   res.status(200).json(response)
@@ -93,7 +94,7 @@ const updatePlace = async (req,res) => {
   const {
         id,title, address, addPhotos,
         description,extraInfo,perks,
-        checkIn,checkOut,maxGuests
+        checkIn,checkOut,maxGuests,price
         } = req.body  
 
   const PlaceDoc = await Place.findById(id)
@@ -108,7 +109,8 @@ const updatePlace = async (req,res) => {
         perks: perks,
         checkIn: checkIn,
         checkOut: checkOut,
-        maxGuests: maxGuests
+        maxGuests: maxGuests,
+        price: price
           })
       await PlaceDoc.save()
       return res.json('Data uddated Successfully')

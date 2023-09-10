@@ -42,8 +42,11 @@ const PlaceSchema = new mongoose.Schema({
     type: Number,
 
   },
-  
+  price: {
+    type: Number,
 
+  }
+  
 })
 
 module.exports = mongoose.model("Place", PlaceSchema);
