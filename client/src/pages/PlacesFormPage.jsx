@@ -18,6 +18,7 @@ export default function PlacesFormPage() {
   const [checkIn,setCheckIn] = useState('')
   const [checkOut,setCheckOut] = useState('')
   const [maxGuests,setMaxGuests] = useState(1)
+  const [price,setPrice] = useState()
 
   useEffect(() => {
     
@@ -27,7 +28,7 @@ export default function PlacesFormPage() {
     
     async function fetchPlace(){
       
-      const {"data":{placeData}} = await axios.get('api/data/place/'+id)
+      const {"data":{placeData}} = await axios.get('api/data//get-user-place-by-id/'+id)
       console.log(placeData)
       setTitle(placeData.title)
       setDescription(placeData.description)
@@ -38,6 +39,7 @@ export default function PlacesFormPage() {
       setExtraInfo(placeData.extrainfo)
       setPerks(placeData.perks)
       setMaxGuests(placeData.maxGuests)
+      setPrice(placeData.price)
     }
 
     fetchPlace()
@@ -71,7 +73,7 @@ export default function PlacesFormPage() {
     let placeInfo = {
       title, address, addPhotos,
       description,extraInfo,perks,
-      checkIn,checkOut,maxGuests
+      checkIn,checkOut,maxGuests,price
     }
     console.log("id in save place is "+id)
 
@@ -116,7 +118,7 @@ export default function PlacesFormPage() {
             <textarea value={extraInfo} onChange={ev => setExtraInfo(ev.target.value)} />
 
             {preInput('Check In & Out','add check in and out times.')}
-            <div className="grid gap-2 sm:grid-cols-3">
+            <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
               <div>
                 <h3 className="mt-2 -mb-1">Check In</h3>
                 <input type="text" value={checkIn} onChange={ev => setCheckIn(ev.target.value)} placeholder="14:00"/>
@@ -128,6 +130,10 @@ export default function PlacesFormPage() {
               <div>
                 <h3 className="mt-2 -mb-1">Max Guests</h3>  
                 <input type="number" value={maxGuests} onChange={ev => setMaxGuests(ev.target.value)} placeholder="3 Persons"/>
+              </div>
+              <div>
+                <h3 className="mt-2 -mb-1">Price Per Night</h3>  
+                <input type="number" value={price} onChange={ev => setPrice(ev.target.value)} placeholder="Price per Night"/>
               </div>
             </div>
 
