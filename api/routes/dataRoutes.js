@@ -2,7 +2,8 @@ const asyncHandler = require('express-async-handler')
 const multer = require('multer')
 const photosMiddleware = multer({dest:'uploads'})
 const { validateToken } = require('../middleware/validateTokenHandler')
-const { getUserPlaces, uploadPhotos, addPlace, updatePlace, getAllPlaces,getPlaceById } = require('../controllers/dataController');
+const { getUserPlaces, uploadPhotos, addPlace, updatePlace,
+       getAllPlaces,getPlaceById, bookPlace, getUserBookings} = require('../controllers/dataController');
 const { uploadByLink } = require('../controllers/dataController');
 
 const router = require('express').Router()
@@ -15,6 +16,7 @@ router.get('/get-user-places',asyncHandler(validateToken),asyncHandler(getUserPl
 router.get('/get-all-places',asyncHandler(getAllPlaces))
 router.get('/get-user-place-by-id/:id',asyncHandler(validateToken),asyncHandler(getPlaceById))
 router.get('/place/:id',asyncHandler(getPlaceById))
-
+router.post('/book-place',asyncHandler(validateToken), asyncHandler(bookPlace))
+router.get('/get-user-bookings',asyncHandler(validateToken), asyncHandler(getUserBookings))
 
 module.exports = router

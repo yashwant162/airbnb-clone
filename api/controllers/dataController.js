@@ -1,5 +1,6 @@
 const User = require('../models/userModel')
 const Place = require('../models/placeModel')
+const Booking = require('../models/bookingModel')
 const imageDownloader = require("image-downloader")
 const path = require('path');
 const fs = require("fs")
@@ -118,4 +119,39 @@ const updatePlace = async (req,res) => {
   res.status(400).json("user id did not match")
 }
 
-module.exports = {uploadByLink, uploadPhotos, addPlace, getUserPlaces, getPlaceById, updatePlace, getAllPlaces}
+const bookPlace = async (req, res) => {
+  const { place, checkIn, checkOut,
+          name, number, price, numberOfGuests
+        } = req.body
+
+  const userID = req.user.id
+  
+  if(!place || !checkIn || !checkOut || !name || !number || !price){
+    res.status(400);
+    throw new Error("All fields are mandatory");
+  }
+
+  const response = await Booking.create({
+    user: userID,
+    place: place,
+    checkIn: checkIn,
+    checkOut: checkOut,
+    name: name,
+    number: number,
+    price: price,
+    numOfGuests: numberOfGuests
+  })
+
+  res.json({"bookingData":response})
+}
+
+const getUserBookings = async (req, res) => {
+  const UserID = req.user.id
+  console.log("User ID: "+ UserID)
+  const response = await Booking.find({user:UserID}).populate('place')
+  console.log("Bookings: "+ response.length)
+  return res.json({"bookingsData": response})
+}
+
+module.exports = {uploadByLink, uploadPhotos, addPlace, getUserPlaces, getPlaceById,
+                  updatePlace, getAllPlaces, bookPlace, getUserBookings}
