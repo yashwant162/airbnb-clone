@@ -74,7 +74,7 @@ const currentUser = async (req, res) => {
     "name": req.user.name,
     "email": req.user.email,
   }
-  console.log(result)
+  // console.log(result)
   res.status(200).json(result)
 }
 

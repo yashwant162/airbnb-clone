@@ -2,12 +2,12 @@ const jwt = require("jsonwebtoken")
 
 const validateToken = async (req, res, next) => {
   const bearerHeader = req?.header["authorization"] ?? req?.cookies
-  console.log("was i here?")
-  console.log("cookie", bearerHeader)
+  // console.log("was i here?")
+  // console.log("cookie", bearerHeader)
   
   if (typeof bearerHeader.Token !== "undefined" && bearerHeader.Token !== 'undefined' ){
     let token = bearerHeader?.Token;
-    console.log("Token: ", token)
+    // console.log("Token: ", token)
     jwt.verify(token, process.env.SECRET_ACCESS_TOKEN, async (err, decoded) => {
       // console.log("before err")
       if(err){
@@ -18,9 +18,10 @@ const validateToken = async (req, res, next) => {
         res.status(401);
         throw new Error("User is not Authorized");
       }
-      console.log("decoded: ",decoded);
+      // console.log("decoded: ",decoded);
+      console.log("User Verified");
       req.user = decoded;
-      console.log(req.user);
+      // console.log(req.user);s
       next();
     })
 
