@@ -153,5 +153,12 @@ const getUserBookings = async (req, res) => {
   return res.json({"bookingsData": response})
 }
 
+const getBookingById = async (req, res) => {
+  const BookingId = req.query.BookingId
+  const response = await Booking.findById(BookingId).populate('place')
+  console.log("Booking Data " + response)
+  res.json({"bookingData":response})
+}
+
 module.exports = {uploadByLink, uploadPhotos, addPlace, getUserPlaces, getPlaceById,
-                  updatePlace, getAllPlaces, bookPlace, getUserBookings}
+                  updatePlace, getAllPlaces, bookPlace, getUserBookings, getBookingById}
