@@ -28,7 +28,7 @@ export default function PlacesFormPage() {
     
     async function fetchPlace(){
       
-      const {"data":{placeData}} = await axios.get('api/data//get-user-place-by-id/'+id)
+      const {"data":{placeData}} = await axios.get('api/data/get-user-place-by-id/'+id)
       console.log(placeData)
       setTitle(placeData.title)
       setDescription(placeData.description)
