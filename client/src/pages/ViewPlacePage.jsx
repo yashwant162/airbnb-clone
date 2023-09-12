@@ -95,8 +95,10 @@ export default function ViewPlacePage(){
           <div className="mb-2">
   
             <div className="my-4">
-              <h2 className="font-semibold text-2xl mb-2 -mt-2">Description</h2>
-              {place.description}
+              <div>
+                <h2 className="font-semibold text-2xl mb-2 -mt-2">Description</h2>
+              </div>
+              <div className="text-md leading-6 text-gray-700">{place.description}</div>
             </div>
             Check In : {place.checkIn}<br/>
             Check Out : {place.checkOut}<br/>
