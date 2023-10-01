@@ -34,7 +34,7 @@ export default function ViewPlacePage(){
   }
 
   return(
-      <div className="mt-4 bg-gray-200 -mx-8 px-8 py-8">
+      <div className="bg-gray-200 px-8 py-8 max-w-6xl w-full mx-auto">
         <h1 className="text-3xl">{place.title}</h1>
         
         <AddressLink className="my-3">{place.address}</AddressLink>
@@ -61,7 +61,7 @@ export default function ViewPlacePage(){
           </div>
         </div>
 
-        <div className="bg-white -mx-8 py-8 px-8 border-t">
+        <div className="-mx-8 py-8 px-8 border-t">
           <div>
             <h2 className="font-semibold text-2xl mb-2">Extra Info</h2>
           </div>
