@@ -96,7 +96,7 @@ export default function PlacesFormPage() {
   return (
      <div>
           <AccountNav/>
-          <form onSubmit={savePlace}>
+          <form onSubmit={savePlace} className="max-w-4xl w-full mx-auto">
             {preInput('Title','Title for your place, should be short and catchy as in advertisement')}
             <input type="text" value={title} onChange={ev => setTitle(ev.target.value)} placeholder="title, for example: My Hotel "/>
 
