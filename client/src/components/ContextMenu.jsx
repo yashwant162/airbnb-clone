@@ -1,6 +1,8 @@
+/* eslint-disable react/jsx-key */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { useEffect, useRef } from "react"
+import { Link } from "react-router-dom"
 
 export default function ContextMenu({options, coordinates, contextMenu, setContextMenu}){
   const contextMenuRef = useRef(null)
@@ -28,7 +30,8 @@ export default function ContextMenu({options, coordinates, contextMenu, setConte
       }}
     >
       <ul>
-        {options.map(({ name, callBack }) => (
+        {options.map(({ name, link, callBack }) => (
+          <Link to={link}>
           <li
             className="hover:bg-gray-100 pl-5 pr-10  py-2 cursor-pointer"
             key={name}
@@ -36,6 +39,7 @@ export default function ContextMenu({options, coordinates, contextMenu, setConte
           >
             <span className="">{name}</span>
           </li>
+          </Link>
         ))}
       </ul>
     </div>
