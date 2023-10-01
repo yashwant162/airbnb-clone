@@ -70,15 +70,19 @@ export default function Header() {
              className="flex items-center gap-2 border border-gray-300 rounded-full py-2 px-4 hover:shadow-xl transition-all duration-500"
              onClick={() => setIsContextMenuVisible(true)}     
           >
-          <Link to={user?'/account':'/login'} className="bg-gray-500 text-white rounded-full border border-gray-500 overflow-hidden">
-            <UserLogo/>
+          <Link to={user?'/account':'/login'} className="flex gap-1">
+            <div className="bg-gray-500 text-white rounded-full border border-gray-500 overflow-hidden">
+              <UserLogo/>
+            </div>
+            <div>
+              {!!user && (
+                <div>
+                  {user.name}
+                </div>
+              )}
+            </div>
           </Link>
           <HamBurger/>
-          {!!user && (
-            <div>
-              {user.name}
-            </div>
-          )}
           {isContextMenuVisible && (
             <ContextMenu options = {contextMenuOptions}
                          coordinates= {{
