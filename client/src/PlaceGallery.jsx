@@ -19,7 +19,7 @@ export default function PlaceGallery({place}){
             </button>
           </div>
           {place?.photos?.length > 0 && place.photos.map(photo => (
-            <div className="" key={place.photos}>
+            <div className="max-w-4xl w-full mx-auto" key={place.photos}>
               <img className="aspect-video object-cover" src={`http://localhost:5000/uploads/${photo}`} alt="" />
             </div>
           ))}
