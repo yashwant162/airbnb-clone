@@ -12,7 +12,7 @@ export default function Footer(){
   ]
 
   return (
-    <div className="md:gap-6 px-20 border-t border-t-gray-200 py-4 flex justify-between w-full text-sm z-50 bg-white items-center">
+    <footer className="md:gap-6 px-20 border-t border-t-gray-200 py-4 flex justify-between w-full text-sm  bg-white items-center "  >
       <ul className="flex gap-3 font-normal cursor-pointer items-center">
         <li>&copy; {new Date().getFullYear()} Airbnb, Inc</li>
         {
@@ -33,6 +33,6 @@ export default function Footer(){
         <li className="cursor-pointer flex gap-1 items-center"><RupeeIcon/> INR</li>
         <li className="cursor-pointer flex gap-1 items-center">Support & Resources <CaretUpIcon/></li>
       </ul>
-    </div>
+    </footer>
   )
 }

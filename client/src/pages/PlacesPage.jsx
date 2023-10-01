@@ -19,7 +19,7 @@ export default function PlacesPage()  {
   },[])
 
   return (
-    <div className="max-w-6xl w-full mx-auto">
+    <div className="max-w-6xl w-full mx-auto mb-3">
       <AccountNav/>
 
         <div className="text-center">

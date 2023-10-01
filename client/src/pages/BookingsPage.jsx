@@ -22,7 +22,7 @@ export default function BookingsPage(){
   return(
     <div className="">
       <AccountNav/>
-      <div className="max-w-6xl w-full mx-auto">
+      <div className="max-w-6xl w-full mx-auto mb-52">
         {bookings?.length > 0 && bookings.map(booking => (
           <Link to={`/account/bookings/${booking._id}`} className="flex gap-4 bg-gray-200 rounded-2xl overflow-hidden mt-4" key={booking.place}>
             <div className="w-48">

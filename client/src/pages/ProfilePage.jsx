@@ -39,7 +39,7 @@ export default function ProfilePage() {
    <div>
     <AccountNav/>
     
-      <div className="text-center max-w-lg mx-auto">
+      <div className="text-center max-w-lg mx-auto mb-96">
         Logged In as {user.name} <br />
         <button onClick={logout} className="primary max-w-sm  mt-2">Logout</button>
       </div>
